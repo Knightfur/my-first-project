@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brewery Locations Map – India</title>
+
+  <style>
+    /* Basic styling for layout */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+    }
+
+    /* Map container with background image */
+    .map-container {
+      position: relative;
+      width: 800px;
+      max-width: 100%;
+      height: 600px;
+      background-image: url('india-map.jpg'); /* 📌 Place your India map JPG here */
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #ddd;
+      margin: auto;
+    }
+
+    /* Brewery marker styling */
+    .marker {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background-color: red;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Popup info box */
+    .popup {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+      min-width: 150px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    /* Arrow on popup */
+    .popup::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -8px;
+      transform: translateY(-50%);
+      border: 8px solid transparent;
+      border-right-color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>United Breweries – Brewery Locations</h1>
+
+  <div class="map-container" id="map-container">
+
+    <!-- 📍 Example cities (position based on approximate coordinates) -->
+    <div class="marker" style="top: 20%; left: 40%;" data-city="Delhi" data-address="Brewery, Connaught Place, Delhi 110001"></div>
+    <div class="marker" style="top: 50%; left: 25%;" data-city="Mumbai" data-address="Brewery, Andheri East, Mumbai 400093"></div>
+    <div class="marker" style="top: 65%; left: 40%;" data-city="Bengaluru" data-address="Brewery, Whitefield, Bengaluru 560066"></div>
+    <div class="marker" style="top: 58%; left: 45%;" data-city="Hyderabad" data-address="Brewery, Banjara Hills, Hyderabad 500034"></div>
+    <div class="marker" style="top: 30%; left: 60%;" data-city="Kolkata" data-address="Brewery, Salt Lake, Kolkata 700091"></div>
+
+    <!-- Popup will be populated dynamically -->
+    <div id="popup" class="popup"></div>
+  </div>
+
+  <script>
+    // Select all markers and the popup element
+    const markers = document.querySelectorAll('.marker');
+    const popup = document.getElementById('popup');
+    const container = document.getElementById('map-container');
+
+    markers.forEach(marker => {
+      marker.addEventListener('click', function (e) {
+        const city = marker.dataset.city;
+        const address = marker.dataset.address;
+
+        // Inject content into the popup
+        popup.innerHTML = `<strong>${city}</strong><br>${address}`;
+        popup.style.display = 'block';
+
+        // Position popup relative to the marker
+        popup.style.top = `${marker.offsetTop - 10}px`;
+        popup.style.left = `${marker.offsetLeft + 20}px`;
+      });
+    });
+
+    // Close popup on clicking outside
+    window.addEventListener('click', function (e) {
+      if (!e.target.classList.contains('marker')) {
+        popup.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
